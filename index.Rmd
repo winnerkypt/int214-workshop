@@ -1,0 +1,66 @@
+---
+title: "INT214: Workshop"
+author: "by: _____________"
+output: html_document
+---
+
+## R Markdown
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+### 1.) Import Library and Preparing Dataset
+#### Import Lib
+```{r packages, message=FALSE, warning=FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(rmarkdown)
+```
+
+#### Import Dataset
+```{r dataset, warning=FALSE}
+int214 <- read_csv("db_int214.csv")
+```
+
+### 2.) Explore Data
+```{r explore1}
+int214 %>% glimpse()
+```
+```{r explore2}
+int214 %>% summary()
+```
+```{r explore3}
+# Sec
+int214 %>% group_by(sec) %>% count()
+# Excel Skill
+int214 %>% group_by(skill_excel) %>% count()
+# R Skill
+int214 %>% group_by(skill_r) %>% count()
+```
+
+### 3.) Data Visualization
+
+You can also embed plots, for example:
+```{r plot1}
+# Example 1
+int214 %>% ggplot(aes(x = sec)) + geom_bar(aes(fill=program)) + ggtitle("Example 1: Bar Chart")
+```
+
+```{r plot2}
+# Example 2
+int214 %>% filter(salary<150000) %>% ggplot(aes(x=salary)) + geom_histogram(bins = 10,fill="#69b3a2",color="#e9ecef") + ggtitle("Example 2: Expected Salary (THB)")
+```
+
+```{r plot3}
+# Example 3
+sample_data <- data.frame(height = rnorm(140,mean=165, sd=3.5))
+ggplot(sample_data, aes(x=height)) + geom_density(fill="#69b3a2",color="#e9ecef") + 
+  ggtitle("Example 3: Students Height")
+```
+
+### 4.) Convert file to HTML
+- Click button `Knit` in R Studio Desktop to save in HTML file. Then, push this file to your github
+
+-----
+Created Template File by [Safe_SIT23](https://github.com/safesit23)
